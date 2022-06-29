@@ -1,30 +1,19 @@
 import React, { useState, useEffect } from "react";
-// import { FaAngleDoubleRight } from "react-icons/fa";
 import CompButton from "./CompButton";
 import MainJob from "./MainJob";
 
 const url = "https://course-api.com/react-tabs-project";
 function App() {
-  const [jobs, setJobs] = useState([]);
   const [mainData, setMainData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [companyNames, setCompanyNames] = useState([]);
-
-  function filterNames(companyTitle) {
-    let arr = jobs.filter((data) => data.company === companyTitle);
-    setMainData(arr);
-  }
+  const [value, setValue] = useState(0);
 
   async function getData() {
     try {
       let response = await fetch(url);
       let data = await response.json();
-      setIsLoading(false);
       setMainData(data);
-      setJobs(data);
-
-      let arr = data.map((comp) => comp.company);
-      setCompanyNames(arr);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -37,7 +26,7 @@ function App() {
   if (isLoading) {
     return (
       <section>
-        <h2>Loading...</h2>
+        <h1>Loading...</h1>
       </section>
     );
   }
@@ -50,10 +39,13 @@ function App() {
       </div>
 
       <div className="jobs-center">
-        <CompButton companyNames={companyNames} filterNames={filterNames} />
+        <CompButton mainData={mainData} setValue={setValue} value={value} />
         <article>
-          <MainJob mainData={mainData} />
-          <button className="btn">More Info</button>
+          <MainJob mainData={mainData} value={value} />
+          <a target="_blank" href="https://cnn.com">
+            {" "}
+            <button className="btn">More Info</button>
+          </a>
         </article>
       </div>
     </section>
