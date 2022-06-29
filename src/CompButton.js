@@ -1,20 +1,16 @@
 import React, { useState } from "react";
 
-function CompButton({ companyNames, filterNames }) {
-  const [isActive, setIsActive] = useState(false);
+function CompButton({ mainData, setValue, value }) {
   return (
     <div className="btn-container">
-      {companyNames.map((company) => {
+      {mainData.map((item, index) => {
         return (
           <button
-            className={`job-btn ${isActive && "active-btn"}`}
-            // className="job-btn"
-            onClick={() => {
-              setIsActive(!isActive);
-              filterNames(company);
-            }}
+            key={item.id}
+            onClick={() => setValue(index)}
+            className={`job-btn ${index === value && "active-btn"}`}
           >
-            {company}
+            {item.company}
           </button>
         );
       })}
